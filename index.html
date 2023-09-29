@@ -4,14 +4,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture2</title>
+  <title>Лекція 11</title>
+  <link rel="stylesheet" href="./css/main.css">
 </head>
 
 <body>
-  <h1>Lecture2</h1>
+
+  <input type="text" id="text-input">
+
+  <select id="text-select">
+    <option>Apple</option>
+    <option>Orange</option>
+    <option>Banana</option>
+  </select>
 
 
-  <script src="./js/index.js"></script>
+
+  <textarea id="text-area" cols="20" rows="5"></textarea>
+
+  <label for="my-check">
+    <input type="checkbox" id="my-check">Check!
+    <!-- якщо біля checkbox стоіть якийсь текст, то його краще огорнути в label-->
+  </label>
+
+
+
+  <label for="my-check1">
+    <input type="checkbox" name="programming" id="my-check1">Check1!
+  </label>
+  <label for="my-check2">
+    <input type="checkbox" name="programming" id="my-check2">Check2!
+  </label>
+  <label for="my-check3">
+    <input type="checkbox" name="programming" id="my-check3">Check3!
+  </label>
+
+  <button id="btn">Get checked</button>
+
+
+
+  <form id="my-form">
+    <input type="text" id="name">
+    <input type="text" id="surname">
+
+    <button type="submit">Submit</button>
+  </form>
+
+
+
+  <!-- Стилізація -->
+  <div class="container1">
+    <div class="container">
+      <span class="main-text">Sign Up</span>
+
+      <form class="form-container" id="signup-form">
+        <label class="text-input1" for="username">
+          <input type="text" id="username"> User Name
+        </label>
+        <label class="text-input1" for="email">
+          <input type="text" id="email"> Email
+        </label>
+
+        <span class="subtext">Choose your languages:</span>
+        <div class="programming-container">
+          <label for="javascript">
+            <input type="checkbox" name="programming1" id="javascript">JS
+          </label>
+          <label for="python">
+            <input type="checkbox" name="programming1" id="python">Python
+          </label>
+        </div>
+        <button class="form-submit" type="submit">Sign Up</button>
+      </form>
+      <!-- version2 -->
+      <span id="error-span"></span>
+    </div>
+  </div>
+
+  <script src="/js/index.js"></script>
 </body>
 
 </html>
