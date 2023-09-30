@@ -101,3 +101,18 @@ age3 === 10
   ? console.log('true')
   : console.log('error');
 // але якщо багато умов краще не використовувати тернарний оператор
+
+// SWITCH CASE
+let age2 = prompt('How old are you?', 'Your answer'); //prompt завжди виводить str
+age2 = Number(age2); // конвертуємо prompt в number
+
+switch (age2) {
+  case age2 > 10:
+    console.log('Bigger than 10');
+    break;
+  case age2 < 30:
+    console.log('Smaller than 30');
+    break;
+  default:
+    console.log('Something went wrong');
+}
