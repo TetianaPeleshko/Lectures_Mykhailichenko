@@ -1,103 +1,154 @@
-// Лекція 3
+// (!city) або (city === null) якщо у city null, undefind або '' city буде true, тобто якщо в city нічого немає, то умова виконається
 
-'use strict';
+// WHILE
+let x = 0;
 
-let temp = '34';
-console.log(typeof temp); // string
-
-let temp2 = Number(temp);
-console.log(typeof temp2); // number
-console.log(temp2); // 34
-
-let temp3 = 'dfg';
-console.log(typeof temp3); //string
-
-let temp4 = Number(temp3);
-console.log(typeof temp4); //number
-console.log(temp4); //Nan
-
-let temp5 = 45;
-console.log(temp5 % 4); //1
-
-let temp6 = prompt('Age:', '45');
-console.log(typeof temp6); // string
-console.log(Number(temp6) + 10); // переведе зі string в number
-
-// IF ELSE
-let number1 = 0;
-let number2 = '34';
-if (!(number1 > -1)) {
-  // оператор "!" перевертає значення у дужках з true на false та навпаки
-  console.log('I`m here!');
-} else {
-  console.log('its not true!');
+while (x < 5) {
+  x += 1;
+  console.log(x); // 1, 2, 3, 4, 5
 }
 
-let age = prompt('How old are you?', 'Your answer'); //prompt завжди виводить str
-age = Number(age); // конвертуємо prompt в number
+// // // // НЕСКІНЧЕННІ ЦИКЛИ, так писати не можна, цикл завжди повинен мати умову яка може закінчитися
+// // // while (true) {
+// // //  x += 1;
+// // //  console.log(x);
+// // // }
 
-// version 1: if () { if () {}}
-if (typeof age == 'number' && String(age) != 'NaN') {
-  // страховка від введення тексту при введені якого його видно як NaN, але NaN це і є 'number'
-  if (age > 30) {
-    console.log('Rest...');
-  } else {
-    console.log('Work!');
+// DO ... WHILE
+do {
+  x += 1;
+  console.log(x);
+} while (x < 5);
+
+// треба спитати число і потім вивести сумму чисел до цього числа. Наприклад 4,то треба вивести 1+2 1+3 1+4
+let N = +prompt('Type your number!');
+let sum = 0; // Змінна для збереження результату
+let i = 0; // i - це ітератор
+
+while (i <= N) {
+  sum += i; // кожну ітерацію збільшуется sum на i
+  i++; // кожну ітерацію збільшується на 1
+}
+console.log(sum); // 15, тому що 1+2=3 +3=6 +4=10 +5=15
+
+i = 0;
+let sum1 = 0;
+// теж саме тільки do ... while
+do {
+  sum1 += i;
+  i++;
+} while (i <= N);
+console.log(sum1);
+
+let sum2 = 0;
+// FOR
+for (let i = 0; i <= N; i++) {
+  sum2 += i;
+}
+console.log(sum2);
+
+// BREAK ... CONTINUE
+let N1 = +prompt('Type your number!');
+let sum1 = 0; // Змінна для збереження результату
+
+for (let j = 0; j <= N1; j++) {
+  if (j === 3) {
+    break; // лічильник повинен дойти до 5, але зупиниться на 3 і виведе тільки 1 і 2
   }
-} else {
-  console.log('Please input number!');
+  sum1 += 1;
+}
+console.log(sum1);
+
+let N2 = +prompt('Type your number!');
+let b = 0; // Змінна для збереження результату
+
+for (let b = 0; b <= N2; b++) {
+  if (b === 5) continue;
+  console.log(b);
+}
+for (let c = 0; c <= N2; c++) {
+  if (c === 5) break;
+  console.log(c);
 }
 
-// version 2: if () {} else if () {} else {}
-if (age > 30) {
-  console.log('1');
-} else if (age > 10) {
-  console.log('2');
-} else {
-  console.log('3');
-}
-
-// version 3
-if (Number(age)) {
-  console.log('1');
-} else {
-  console.log('2');
-}
-
-// hw
-if (age % 2 == 0) {
-  console.log('1');
-} else {
-  console.log('2');
-}
-
-// SWITCH CASE
-let age2 = prompt('How old are you?', 'Your answer'); //prompt завжди виводить str
-age2 = Number(age2); // конвертуємо prompt в number
-
-switch (age2) {
-  case age2 > 10:
-    console.log('Bigger than 10');
+// Приклад використання break в циклі for
+for (let i = 1; i <= 5; i++) {
+  if (i === 3) {
+    console.log('Цикл припинено на i = 3');
     break;
-  case age2 < 30:
-    console.log('Smaller than 30');
-    break;
-  default:
-    console.log('Something went wrong');
+  }
+  console.log(i);
 }
 
-// Тернарний оператор
-let age3 = prompt('How old are you?', 'Your answer'); //prompt завжди виводить str
-age3 = Number(age3); // конвертуємо prompt в number
+// Приклад використання continue в циклі for
+for (let j = 1; j <= 5; j++) {
+  if (j === 3) {
+    console.log('Пропущено ітерацію для j = 3');
+    continue;
+  }
+  console.log(j);
+}
 
-age3 === 10 ? console.log('10') : console.log('20'); // якщо треба щось перевірити швидко
+// HOMEWORK
+// Таблиця множення
+for (let i = 1; i < 10; i++) {
+  console.log(`7 * ${i} = ${7 * i}`);
+}
 
-//  ? - якщо так, то зробити або вивести...
-//  : - (else) якщо ні, то...
+// Знайти середнє арифметичне всіх цілих чисел від 1 до 500
+let sum = 0;
+for (let j = 1; j <= 500; j++) {
+  sum += j;
+}
+console.log(sum / 500);
 
-age3 === 10
-  ? console.log('10')
-  : age > 10
-  ? console.log('true')
-  : console.log('error');
-// але якщо багато умов краще не використовувати тернарний оператор
+// Вивести всі числа в діапазоні від 100 до 200 кратні
+for (let i = 100; i <= 200; i++) {
+  if (i % 3 === 0) {
+    console.log(i);
+  }
+}
+// Дано натуральне число. Знайти та вивести на сторінку всі його дільники.
+let num = 9;
+for (let i = 1; i <= 9; i++) {
+  if (num % i === 0) console.log(i);
+}
+
+// Надрукувати повну таблицю множення від 1 до 10
+for (let i = 1; i <= 4; i++) {
+  for (let j = 1; j <= 9; j++) {
+    console.log(`${i} * ${j} = ${i * j}`);
+  }
+}
+
+// ARRAYS
+let userNames = ['Ihor', 12, '45', 'Dasha'];
+
+userNames.push('Alex'); // додає в кінець масиву
+console.log(userNames);
+
+// вивести все, що є в масиві
+for (let k = 0; let < userNames.length; i++) {
+  console.log(userNames[i]);
+}
+
+// для кожного item всередині масива шось зробити
+userNames.forEach((item) => {
+  console.log(item);
+}); // так само виведе все, що є в масиві
+
+// СКЛАДНІШІ ЦИКЛИ
+// Дане деяке число. Визначити, чи можна одержати це число шляхом зведення числа 3 у деякий ступінь. (Наприклад, числа 9, 81 можна отримати, а 13 - не можна).
+
+let number1 = +prompt('Input number', '1');
+let i = 1;
+while (true) {
+  if (number1 === Math.pow(3, i)) {
+    console.log(`The number is - ${Math.pow(3, i)}`);
+    break;
+  } else if (Math.pow(3, i) > number1) {
+    console.log('Not found');
+    break;
+  }
+  i++;
+}
