@@ -1,154 +1,196 @@
-// (!city) або (city === null) якщо у city null, undefind або '' city буде true, тобто якщо в city нічого немає, то умова виконається
+// // FUNCTION
 
-// WHILE
-let x = 0;
+// // function replace typing the same things multiple times
+// function func(number) {
+//   for (let i = 0; i <= number; i++) {
+//     if (number % i === 0) {
+//       console.log(i);
+//     }
+//   }
+// }
 
-while (x < 5) {
-  x += 1;
-  console.log(x); // 1, 2, 3, 4, 5
-}
+// let number1 = +prompt('First number:', '0');
+// func(number1);
 
-// // // // НЕСКІНЧЕННІ ЦИКЛИ, так писати не можна, цикл завжди повинен мати умову яка може закінчитися
-// // // while (true) {
-// // //  x += 1;
-// // //  console.log(x);
-// // // }
+// let number2 = +prompt('Second number:', '0');
 
-// DO ... WHILE
-do {
-  x += 1;
-  console.log(x);
-} while (x < 5);
+// // function + return
+// function func1(number) {
+//   let numberAdd = number + 2;
+//   return numberAdd;
+// }
+// // для збереження того, що поверне функція створюємо нову змінну і припівнюємо те що поверне функція
+// let numberResult = func1(number2);
+// console.log(numberResult);
 
-// треба спитати число і потім вивести сумму чисел до цього числа. Наприклад 4,то треба вивести 1+2 1+3 1+4
-let N = +prompt('Type your number!');
-let sum = 0; // Змінна для збереження результату
-let i = 0; // i - це ітератор
+// // фунція може просто щось виводити
+// function func2() {
+//   console.log('String');
+// }
+// func2();
 
-while (i <= N) {
-  sum += i; // кожну ітерацію збільшуется sum на i
-  i++; // кожну ітерацію збільшується на 1
-}
-console.log(sum); // 15, тому що 1+2=3 +3=6 +4=10 +5=15
+// //стрілочна функція, сама по собі існувати не може, тому оголошують зміну куди її запихують
+// () => {};
+// let func3 = () => {
+//   console.log('String');
+// };
 
-i = 0;
-let sum1 = 0;
-// теж саме тільки do ... while
-do {
-  sum1 += i;
-  i++;
-} while (i <= N);
-console.log(sum1);
+// func3();
 
-let sum2 = 0;
-// FOR
-for (let i = 0; i <= N; i++) {
-  sum2 += i;
-}
-console.log(sum2);
+// // ARRAYS
+// // оголошення масива
+// let arr = [];
+// // arr. ... для додавання чогось у масив використовують вбудовані функції
+// arr.push(1); // додає значення у кінець масиву
+// arr.push(2);
+// console.log(arr);
 
-// BREAK ... CONTINUE
-let N1 = +prompt('Type your number!');
-let sum1 = 0; // Змінна для збереження результату
+// // заміна конкретного індексу
+// arr[0] = 5;
+// console.log(arr);
 
-for (let j = 0; j <= N1; j++) {
-  if (j === 3) {
-    break; // лічильник повинен дойти до 5, але зупиниться на 3 і виведе тільки 1 і 2
+// // виведення конкретного елементу по інддексу
+// console.log(arr[1]);
+
+// // довжина масиву
+// console.log(arr.length);
+
+// // вивести всі елементи масиву і додати до кожного з них 2, але є спеціяльний метод
+// let arr2 = [2, 3, 4, 5];
+
+// for (let i = 0; i < arr2.length; i++) {
+//   console.log(arr2[i] + 2);
+// }
+
+// // .map створює новий масив в якому кожен елемент обчислюється на базі того, що прий шло з масива
+// // виводить новий масив
+// let arr3 = [2, 3, 4, 5, 6, 7];
+// let arrAfterMap = arr3.map((item) => {
+//   return item + 2;
+// });
+// console.log(arrAfterMap);
+
+// // .filter відфільтровує дані, повертає новий масив, але тільки по якійсь умові
+
+// let arr4 = [2, 3, 4, 5];
+// let arrAfterFunc = arr4.filter((item) => {
+//   return item % 2 === 0;
+// });
+// console.log(arrAfterFunc); // поверне масив де будуть тільки парні числа
+
+// // .forEach нічого не повертає, але проходиться по елементам у масиві і щось з ними робить, кореневий масив не змінює
+// let arr5 = [2, 3, 4];
+// arr5.forEach((item) => {
+//   console.log(item);
+// });
+
+// // .reduce зменшує масив до якогось одного значення проходячись по всім елементам і щось з ними зробить
+// // Приклад: знайти сумму всіх елементів у масиві
+// let arr6 = [2, 3, 4, 7];
+// let arrAfterReduce = arr6.reduce((accumulator, item) => {
+//   return accumulator + item;
+//   // accumulator - змінна яка збирає результат сумування всіх елементів
+// }, 0); // 0 - це початкове значення
+// console.log(arrAfterReduce);
+
+// // .pop() Видаляє останній елемент з масиву, а також вміє повертати його
+// let arr7 = [2, 3, 4, 7, 8, 9];
+// let lustNumber = arr7.pop();
+
+// console.log(arr7);
+// console.log(lustNumber); // виведете, що було видалене
+
+// // .shift() Видаляє перший елемент з масиву
+// let arr8 = [2, 3, 4, 7, 8, 9];
+// let firstNumber = arr8.shift();
+
+// console.log(arr8);
+// console.log(firstNumber);
+
+// // .splice видаляє елементи з масиву за індексом та вставляє елементи в масив за індексом
+// let arr9 = [2, 3, 4, 7, 8, 9];
+// let numberByIdex = arr9.splice(2, 3, 7, 7, 7);
+// // перше значення: індекс з якого починати, другий: скільки елементів видалити, 3, 4 та 5 - Числа вставлені на заміну видаленим
+// console.log(arr9);
+
+// // .splice не видаляє елементи з масиву, але на місто вказаного індексу вставляє нове значення
+// let arr10 = [2, 3, 4, 5, 6, 7];
+// let numberAddByIdex = arr10.splice(2, 0, 7);
+// console.log(arr10); // [2, 3, 7, 4, 5, 6, 7]
+
+// // який індекс елемента
+// // indexOf - до неї передається значення
+// console.log(arr10.indexOf(5)); // 4
+// // якщо елементів буде декілька, то виведе перше знайдене і зупинеться
+// // якщо заданного ЕЛЕМЕНТА НЕМА, ТО ВИВЕДЕ -1
+
+// // .find() повертає перший знайдений елемент працюючи з функцією, можна задавати умову за якої буде повернутий item
+// let arr11 = [1, 8, 4, 5, 6, 7];
+// let element = arr11.find((item) => {
+//   return item % 2 === 0;
+// });
+// console.log(element);
+
+// // .sort() - бере a і b та порівнює між собою, перебираючи весь масив
+// // використовуєтьяс для сортування елементів масиву
+// let numbers = [4, 2, 5, 1, 3];
+
+// // Сортування без compareFunction
+// numbers.sort();
+// console.log(numbers); // [1, 2, 3, 4, 5]
+
+// // Сортування з compareFunction (у порядку спадання)
+// numbers.sort(function (a, b) {
+//   return b - a;
+// });
+// console.log(numbers); // [5, 4, 3, 2, 1]
+
+// let arr12 = [1, 5, 6, 9, 2, 0, 10];
+
+// arr12.sort();
+// // console.log(arr12); // [0, 1, 10, 2, 5, 6, 9] де 10 не на своєму місці
+// arr12.sort(function (a, b) {
+//   return a - b;
+// }); // arr12.sort((a, b) => a-b); // скорочений запис через стрілкову функцію
+// console.log(arr12); //  [0, 1, 2, 5, 6, 9, 10] !!! вірний вивід
+
+// let arr13 = [1, 5, 6, 9, 2, 0, 10];
+// arr13.sort(function (a, b) {
+//   return b - a;
+// });
+// console.log(arr13); // [10, 9, 6, 5, 2, 1, 0] зворотній вивід
+
+// // HW
+// let arrLength = +prompt('Enter array length:', '7');
+// let arr = [];
+
+// for (let i = 0; i < arrLength; i++) {
+//   let arrElements = +prompt('Enter elements:', '0');
+//   arr.push(arrElements);
+// }
+// console.log(arr);
+
+// Знайти найбільший серед елементів масиву, ост альні обнулити.
+let arr2 = [
+  16, -37, 54, -4, 72, -56, 47, 4, -16, 25, -37, 46, 4, -51, 27, -63, 4, -54,
+  76, -4, 12, -35, 4, 47,
+];
+let number = 0; // для порівння
+
+// переписати через forEach
+for (let i = 0; i < arr2.length; i++) {
+  if (arr2[i] > number) {
+    number = arr2[i]; // Записуємо елемент і виведе один елемент - найбільший
+    // так как пройде по всім елементам і порівняє іх між собой, постійно перезаписуючи найбільше в number
   }
-  sum1 += 1;
 }
-console.log(sum1);
+let foundIndex = arr2.indexOf(number);
+console.log(number);
+console.log(foundIndex);
 
-let N2 = +prompt('Type your number!');
-let b = 0; // Змінна для збереження результату
-
-for (let b = 0; b <= N2; b++) {
-  if (b === 5) continue;
-  console.log(b);
-}
-for (let c = 0; c <= N2; c++) {
-  if (c === 5) break;
-  console.log(c);
-}
-
-// Приклад використання break в циклі for
-for (let i = 1; i <= 5; i++) {
-  if (i === 3) {
-    console.log('Цикл припинено на i = 3');
-    break;
-  }
-  console.log(i);
-}
-
-// Приклад використання continue в циклі for
-for (let j = 1; j <= 5; j++) {
-  if (j === 3) {
-    console.log('Пропущено ітерацію для j = 3');
-    continue;
-  }
-  console.log(j);
-}
-
-// HOMEWORK
-// Таблиця множення
-for (let i = 1; i < 10; i++) {
-  console.log(`7 * ${i} = ${7 * i}`);
-}
-
-// Знайти середнє арифметичне всіх цілих чисел від 1 до 500
-let sum = 0;
-for (let j = 1; j <= 500; j++) {
-  sum += j;
-}
-console.log(sum / 500);
-
-// Вивести всі числа в діапазоні від 100 до 200 кратні
-for (let i = 100; i <= 200; i++) {
-  if (i % 3 === 0) {
-    console.log(i);
+for (let i = 0; i < arr2.length; i++) {
+  if (i != foundIndex) {
+    arr2[i] = 0;
   }
 }
-// Дано натуральне число. Знайти та вивести на сторінку всі його дільники.
-let num = 9;
-for (let i = 1; i <= 9; i++) {
-  if (num % i === 0) console.log(i);
-}
-
-// Надрукувати повну таблицю множення від 1 до 10
-for (let i = 1; i <= 4; i++) {
-  for (let j = 1; j <= 9; j++) {
-    console.log(`${i} * ${j} = ${i * j}`);
-  }
-}
-
-// ARRAYS
-let userNames = ['Ihor', 12, '45', 'Dasha'];
-
-userNames.push('Alex'); // додає в кінець масиву
-console.log(userNames);
-
-// вивести все, що є в масиві
-for (let k = 0; let < userNames.length; i++) {
-  console.log(userNames[i]);
-}
-
-// для кожного item всередині масива шось зробити
-userNames.forEach((item) => {
-  console.log(item);
-}); // так само виведе все, що є в масиві
-
-// СКЛАДНІШІ ЦИКЛИ
-// Дане деяке число. Визначити, чи можна одержати це число шляхом зведення числа 3 у деякий ступінь. (Наприклад, числа 9, 81 можна отримати, а 13 - не можна).
-
-let number1 = +prompt('Input number', '1');
-let i = 1;
-while (true) {
-  if (number1 === Math.pow(3, i)) {
-    console.log(`The number is - ${Math.pow(3, i)}`);
-    break;
-  } else if (Math.pow(3, i) > number1) {
-    console.log('Not found');
-    break;
-  }
-  i++;
-}
+console.log(arr2);
