@@ -1,196 +1,279 @@
-// FUNCTION
-
-// function replace typing the same things multiple times
-function func(number) {
-  for (let i = 0; i <= number; i++) {
-    if (number % i === 0) {
-      console.log(i);
-    }
-  }
-}
-
-let number1 = +prompt('First number:', '0');
-func(number1);
-
-let number2 = +prompt('Second number:', '0');
-
-// function + return
-function func1(number) {
-  let numberAdd = number + 2;
-  return numberAdd;
-}
-// для збереження того, що поверне функція створюємо нову змінну і припівнюємо те що поверне функція
-let numberResult = func1(number2);
-console.log(numberResult);
-
-// фунція може просто щось виводити
-function func2() {
-  console.log('String');
-}
-func2();
-
-//стрілочна функція, сама по собі існувати не може, тому оголошують зміну куди її запихують
-() => {};
-let func3 = () => {
-  console.log('String');
+// Варіанти створення об'єктів
+let obj = {
+  apple: 3,
+  bananas: 34,
+  qiwi: 45,
 };
 
-func3();
+// достуа до властивостей
+console.log(obj); //Подивитись, що в об'єкті
+console.log(obj.apple); //Подивитись значення, написати ключ
 
-// ARRAYS
-// оголошення масива
-let arr = [];
-// arr. ... для додавання чогось у масив використовують вбудовані функції
-arr.push(1); // додає значення у кінець масиву
-arr.push(2);
-console.log(arr);
+// Збереження об'єктів у пам'яті
+obj.apple = 45; //зміна значення ключа
+console.log(obj.apple);
 
-// заміна конкретного індексу
-arr[0] = 5;
-console.log(arr);
+// Додавання в об'єкт
+obj.orange = 23;
+console.log(obj);
 
-// виведення конкретного елементу по інддексу
-console.log(arr[1]);
+// Object.freeze()
+Object.freeze(obj); //Заморожування об'кта, після чого його не можна змінити
+obj.apple = 70;
+console.log(obj.apple); // 45
 
-// довжина масиву
-console.log(arr.length);
+// видалення (не працює з freeze та seal)
+let animal = {
+  rabbit: 3,
+  turtle: 5,
+  cat: 7,
+};
+console.log(animal);
 
-// вивести всі елементи масиву і додати до кожного з них 2, але є спеціяльний метод
-let arr2 = [2, 3, 4, 5];
+// Object.seal()
+Object.seal(animal); // не дає видаляти, але дозволяє змінювати
+delete animal.cat;
+animal.turtle = 8;
+console.log(animal);
 
-for (let i = 0; i < arr2.length; i++) {
-  console.log(arr2[i] + 2);
+// КОПІЮВАННЯ об'єктів
+
+// const animalCopy = animal; // !проблема: змінюється основний масив
+// animalCopy.turtle = 11;
+// console.log(animal);
+
+// правильне копіювання
+
+// 1 копіювання першого рівня вкладеності
+let fruits = {
+  apple: 3,
+  bananas: 34,
+  qiwi: 45,
+};
+const fruitsCopy = {}; //спочатку створюємо масив куди хочемо скопіювати
+Object.assign(fruitsCopy, fruits); // першим параметром вказуємо об'єкти куди копіюємо, другий параметр це об'єкт з якого робиться копія
+fruits.bananas = 12;
+console.log(fruitsCopy); // зміни у fruits не вплинули на fruitsCopy
+fruitsCopy.bananas = 25;
+console.log(fruits);
+console.log(fruitsCopy);
+
+// 2 глибоке копіювання
+let animalPeople = {
+  rabbit: 3,
+  turtle: 5,
+  user: {
+    name: 'Ihor',
+    surname: 'Mykh',
+  },
+  cat: 7,
+};
+
+// Object.keys()
+console.log(Object.keys(animalPeople)); // виводе масив ключів ['rabbit', 'turtle', 'user', 'cat']
+
+// for ... in по ключам
+for (let item in obj) {
+  console.log(item); // виведе вписок ключів obj
 }
 
-// .map створює новий масив в якому кожен елемент обчислюється на базі того, що прий шло з масива
-// виводить новий масив
-let arr3 = [2, 3, 4, 5, 6, 7];
-let arrAfterMap = arr3.map((item) => {
-  return item + 2;
-});
-console.log(arrAfterMap);
+// Object.values()
+console.log(Object.values(animalPeople)); // видає значення ключів [3, 5, {…}, 7]
 
-// .filter відфільтровує дані, повертає новий масив, але тільки по якійсь умові
+// 1
+// for ... in по значенням
+for (let item in animalPeople) {
+  console.log(animalPeople[item]); // виведе список значень ключів obj
+}
 
-let arr4 = [2, 3, 4, 5];
-let arrAfterFunc = arr4.filter((item) => {
-  return item % 2 === 0;
-});
-console.log(arrAfterFunc); // поверне масив де будуть тільки парні числа
+// 2
+// for ... of по значенням об'єкта
+for (let value of Object.values(animalPeople)) {
+  console.log(value); // виведе список значень ключів obj
+}
 
-// .forEach нічого не повертає, але проходиться по елементам у масиві і щось з ними робить, кореневий масив не змінює
-let arr5 = [2, 3, 4];
-arr5.forEach((item) => {
-  console.log(item);
-});
+// for ... of так само може ходити по значенням масиву
+let arr = [1, 2, 3, 4, 5];
+for (let value of arr) {
+  console.log(value); // виведе список значень ключів obj
+}
 
-// .reduce зменшує масив до якогось одного значення проходячись по всім елементам і щось з ними зробить
-// Приклад: знайти сумму всіх елементів у масиві
-let arr6 = [2, 3, 4, 7];
-let arrAfterReduce = arr6.reduce((accumulator, item) => {
-  return accumulator + item;
-  // accumulator - змінна яка збирає результат сумування всіх елементів
-}, 0); // 0 - це початкове значення
-console.log(arrAfterReduce);
+//  Глибоке клонування приклад від викладача
+// подивитись тип item (кожен раз дивиться тип значення за ключем)
+// (особливо важливе тоді, коли вихідний об'єкт містить вкладені об'єкти або масиви)
+let animalPeopleCopy = {};
+for (let item in obj) {
+  if (typeof obj[item] === 'object') {
+    console.log('Object');
+  } else {
+    animalPeopleCopy[item] = obj[item];
+  }
 
-// .pop() Видаляє останній елемент з масиву, а також вміє повертати його
-let arr7 = [2, 3, 4, 7, 8, 9];
-let lustNumber = arr7.pop();
+  console.log(animalPeopleCopy);
+}
 
-console.log(arr7);
-console.log(lustNumber); // виведете, що було видалене
+// приклад з chatGPT
+function deepClone(obj) {
+  if (obj === null || typeof obj !== 'object') {
+    return obj; // повертаємо примітиви і null без змін
+  }
 
-// .shift() Видаляє перший елемент з масиву
-let arr8 = [2, 3, 4, 7, 8, 9];
-let firstNumber = arr8.shift();
+  if (Array.isArray(obj)) {
+    // якщо це масив, клонуємо його елементи
+    return obj.map(deepClone);
+  }
 
-console.log(arr8);
-console.log(firstNumber);
+  // якщо це об'єкт, клонуємо його властивості
+  const clonedObj = {};
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      clonedObj[key] = deepClone(obj[key]);
+    }
+  }
 
-// .splice видаляє елементи з масиву за індексом та вставляє елементи в масив за індексом
-let arr9 = [2, 3, 4, 7, 8, 9];
-let numberByIdex = arr9.splice(2, 3, 7, 7, 7);
-// перше значення: індекс з якого починати, другий: скільки елементів видалити, 3, 4 та 5 - Числа вставлені на заміну видаленим
-console.log(arr9);
+  return clonedObj;
+}
 
-// .splice не видаляє елементи з масиву, але на місто вказаного індексу вставляє нове значення
-let arr10 = [2, 3, 4, 5, 6, 7];
-let numberAddByIdex = arr10.splice(2, 0, 7);
-console.log(arr10); // [2, 3, 7, 4, 5, 6, 7]
+// let animalPeople вже була об'явлена вище, тому закоментила
+// let animalPeople = {
+//   rabbit: 3,
+//   turtle: 5,
+//   user: {
+//     name: 'Ihor',
+//     surname: 'Mykh',
+//   },
+//   cat: 7,
+// };
 
-// який індекс елемента
-// indexOf - до неї передається значення
-console.log(arr10.indexOf(5)); // 4
-// якщо елементів буде декілька, то виведе перше знайдене і зупинеться
-// якщо заданного ЕЛЕМЕНТА НЕМА, ТО ВИВЕДЕ -1
+let animalPeopleCopy2 = deepClone(animalPeople);
+console.log(animalPeopleCopy2);
 
-// .find() повертає перший знайдений елемент працюючи з функцією, можна задавати умову за якої буде повернутий item
-let arr11 = [1, 8, 4, 5, 6, 7];
-let element = arr11.find((item) => {
-  return item % 2 === 0;
-});
-console.log(element);
+// JSON
+// переводе об'єкт у строку
+let trees = {
+  birch: 5,
+  oak: 2,
+  bush: {
+    raspberry: 3,
+    currant: 2,
+  },
+  maple: 7,
+};
+// JSON.stringify переводить об'єкт у строку
+console.log(JSON.stringify(trees)); // {"birch":5,"oak":2,"bush":{"raspberry":3,"currant":2},"maple":7}
 
-// .sort() - бере a і b та порівнює між собою, перебираючи весь масив
-// використовуєтьяс для сортування елементів масиву
-let numbers = [4, 2, 5, 1, 3];
+// JSON.parse виводить з формату строки зворотньо у об'єкт
+console.log(JSON.parse(JSON.stringify(trees))); // {birch: 5, oak: 2, bush: {…}, maple: 7}
 
-// Сортування без compareFunction
-numbers.sort();
-console.log(numbers); // [1, 2, 3, 4, 5]
+let treesCopy = JSON.parse(JSON.stringify(trees));
+trees.bush.currant = 'Alex';
+console.log(treesCopy); //не змінений, бо відбулося глибоке клонування
 
-// Сортування з compareFunction (у порядку спадання)
-numbers.sort(function (a, b) {
-  return b - a;
-});
-console.log(numbers); // [5, 4, 3, 2, 1]
+//
+// ФУНКЦІЇ Основи роботи
+//
+// Spread operator ...
+let arr1 = [1, 2, 3, 4];
+let arrCopy = [...arr1];
+console.log(arrCopy); //copy array
 
-let arr12 = [1, 5, 6, 9, 2, 0, 10];
+const fruit2 = {
+  apple: 4,
+  banana: 5,
+};
+let fruit2Copy = { ...fruit2 };
+console.log(fruit2Copy); // copy object (the shape of the parentheses matters)
 
-arr12.sort();
-// console.log(arr12); // [0, 1, 10, 2, 5, 6, 9] де 10 не на своєму місці
-arr12.sort(function (a, b) {
-  return a - b;
-}); // arr12.sort((a, b) => a-b); // скорочений запис через стрілкову функцію
-console.log(arr12); //  [0, 1, 2, 5, 6, 9, 10] !!! вірний вивід
+// function declaration
+function func() {
+  console.log('1');
+}
 
-let arr13 = [1, 5, 6, 9, 2, 0, 10];
-arr13.sort(function (a, b) {
-  return b - a;
-});
-console.log(arr13); // [10, 9, 6, 5, 2, 1, 0] зворотній вивід
+// function expression
+const func1 = function func() {
+  console.log('2');
+};
+
+// Передача параметрів у функцію
+function multNumByTwo(number, multBy = 2) {
+  return number * multBy;
+}
+console.log(multNumByTwo(4, 4));
+
+// якщо є два параметри, але другий не обов'язковий і треба щоб функція працювали і з одним
+function SumName(name, surname = '') {
+  return name + surname;
+}
+console.log(SumName('John'));
+
+// якщо не знаємо кількість аргументів (операторів)
+function spreadOperator(...args) {
+  console.log(args);
+}
+console.log(spreadOperator('John', 'Smith', 'Jo')); //['John', 'Smith', 'Jo']
+
+// перебір масива
+function searchArray(...args) {
+  for (let i = 0; i < args.length; i++) {
+    console.log(args[i]);
+  }
+}
+console.log(searchArray('John', 'Smith', 'Jo'));
+// John
+// Smith
+// Jo
+
+// стрілочни функції
+let fff = () => {};
 
 // HW
-let arrLength = +prompt('Enter array length:', '7');
-let arr = [];
-
-for (let i = 0; i < arrLength; i++) {
-  let arrElements = +prompt('Enter elements:', '0');
-  arr.push(arrElements);
-}
-console.log(arr);
-
-// Знайти найбільший серед елементів масиву, ост альні обнулити.
-let arr2 = [
-  16, -37, 54, -4, 72, -56, 47, 4, -16, 25, -37, 46, 4, -51, 27, -63, 4, -54,
-  76, -4, 12, -35, 4, 47,
+// Дан масив об'єктів. Вивести масив телефонних номерів користувачів, у яких баланс більше 2000 доларів. І знайти суму всіх балансів користувачів
+// переробити через forEach
+let users = [
+  {
+    index: 0,
+    isActive: true,
+    balance: 2226.6,
+    name: 'Eugenia Sawyer',
+    gender: 'female',
+    phone: '+1 (840) 583-3207',
+    address: '949 John Street, Rose, Puerto Rico, 1857',
+  },
+  {
+    index: 1,
+    isActive: true,
+    balance: 2613.77,
+    name: 'Pauline Gallegos',
+    gender: 'female',
+    phone: '+1 (985) 593-3328',
+    address: '328 Greenpoint Avenue, Torboy, North Dakota, 6857',
+  },
+  {
+    index: 5,
+    isActive: false,
+    balance: 1790.56,
+    name: 'Suzette Lewis',
+    gender: 'female',
+    phone: '+1 (837) 586-3283',
+    address: '314 Dunne Place, Bawcomville, Guam, 9053',
+  },
 ];
-let number = 0; // для порівння
 
-// переписати через forEach
-for (let i = 0; i < arr2.length; i++) {
-  if (arr2[i] > number) {
-    number = arr2[i]; // Записуємо елемент і виведе один елемент - найбільший
-    // так как пройде по всім елементам і порівняє іх між собой, постійно перезаписуючи найбільше в number
+let arrResult = [];
+for (let i = 0; i < users.length; i++) {
+  if (users[i].balance > 2000) {
+    arrResult.push(users[i]);
   }
 }
-let foundIndex = arr2.indexOf(number);
-console.log(number);
-console.log(foundIndex);
+console.log(arrResult);
 
-for (let i = 0; i < arr2.length; i++) {
-  if (i != foundIndex) {
-    arr2[i] = 0;
-  }
-}
-console.log(arr2);
+// Перероблено через forEach
+let arrResult = [];
+
+users.forEach((user) => {
+  if (user.balance > 2000) {
+    arrResult.push(user);
+  } // user.balance > 2000 ? arrResult.push(user) : null;
+});
+
+console.log(arrResult);
