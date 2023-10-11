@@ -1,128 +1,148 @@
-// From lecture 6
-// DEEP COPY by ASSIGN
-const user = {
+// Lecture 8
+
+// HIGHER-ORDER FUNCTION (функція вищого порядку) - приймає або повертає інші функції
+function func2() {
+  console.log(1);
+}
+
+function func1(func2) {
+  func2();
+}
+
+func1(func2); //викликаємо func1(), яка є функцією вищого порядку, а вона йде і диветься, що таке func2
+
+// CALL BACK FUNCTION - викликається всередині іншої по завершенню дій
+func2(); // - це функція call back
+
+// глобальний об'єкт WINDOW
+function myOwnFunction() {}
+console.log(window); //виведе всі об'єкти window + myOwnFunction (коли запускається программа в js відразу запускається об'єкт window)
+
+// CONTEXT Це абстрактний термін, що вказує на середовище виконання коду, яке містить змінні, об'єкти та інші дані, необхідні для виконання функції чи блоку коду (де функція була виконана, у який момент). Відомо, що в середовищі виконання коду також зберігається інформація про область видимості змінних, ланцюжок об'єктів, які викликають функції, і т. д.
+
+const obj = {
   name: 'Ihor',
-  surname: 'Mykh',
-  date: {
-    id: 23,
-    age: 25,
+  chowContext: function () {
+    console.log(this); // вказівник на context, там де буде викликана функція
+    // this поcилається на об'єкт, тому контекстом виконання функції буде об'єкт
+  },
+};
+obj.chowContext();
+
+// !!! Стрілкова функція не використовувати в цьому контексті
+const objArrow = {
+  name: 'Ihor',
+  chowContextArrow: () => {
+    // у стрілочної функції нема контексту
+    console.log(this); // у стрілочної функції нема context, її контекст - це об'єкт window
+  },
+};
+objArrow.chowContextArrow();
+
+var name = 'Tom'; // так як var, то створено у об'єкті window
+function tom() {
+  console.log(this.name + ' Runs'); // this посилається на window
+}
+// Invoke the function tom()
+tom(); // викликається в глобальній області видимості і виводиться
+
+// ARGUMENTS - псевдомасив, створюється автоматично, невидим, але можна вивести дані
+// псевдомасив, тому що у нього немає ніяких вбудованих функцій які є у масиві, може достучатись тільки до довжини, працює тільки з довжиною, через [i]
+function funcMult(a, b) {
+  console.log(arguments.length); // або console.log(arguments[0]);
+}
+funcMult(1, 3);
+
+// THIS посилається на поточний об'єкт
+const obj2 = {
+  name: 'Ihor',
+  showName: function () {
+    console.log(this.name);
+  },
+};
+obj2.showName(); // Ihor
+
+// Вбудовані методи
+// CALL -використовуєтьсядля виклику функції з вказаним контекстом і аргументами
+
+// EXAMPLE THIS whith CALL
+const obj3 = {
+  name: 'Ihor',
+  surname: 'fghdjks',
+}; // об'єкт у якого нічого нема
+
+const obj4 = {
+  name: 'Alex',
+};
+
+function showContext() {
+  console.log(this);
+} // функція,яка показує контекст там де вона була викликана
+// в данному виподку контекстом функції буде глобальний об'єкт і буде показивати, що зберігається в об'єкті obj3
+showContext.call(obj3); // {name: 'Ihor'} // функція покаже об'єкт, тепер this вказує не на глобальний об'єкт window, а на об'єкт на якому вона була викликана
+showContext.call(obj4); // {name: 'Alex'}
+
+// виклик функції function (word) через THIS
+const person = {
+  name: 'Ihor',
+  saySmth: function (word) {
+    console.log(`${word} ${this.name}`);
   },
 };
 
-const userCopy = {};
-for (let item in user) {
-  if (typeof user[item] === 'object') {
-    userCopy[item] = Object.assign({}, user[item]);
-  } else {
-    userCopy[item] = user[item];
-  }
+const otherPerson = {
+  name: 'Alex',
+};
+person.saySmth('Hello,');
+
+// виклик функції function (word) через CALL
+const person1 = {
+  name: 'Ihor',
+  saySmth1: function (word) {
+    console.log(`${word} ${this.name}`);
+  },
+};
+
+const otherPerson1 = {
+  name: 'Alex',
+};
+person1.saySmth1.call(otherPerson1, 'Hello,'); //перший аргумент - об'єкт на якому хочемо викликати функцію, наступні - параметри які приймає функція, яку було викликано
+
+// виклик функції function (word) через APPLY
+const person2 = {
+  name: 'Ihor',
+  saySmth2: function (word) {
+    console.log(`${word} ${this.name}`);
+  },
+};
+
+const otherPerson2 = {
+  name: 'Masha',
+};
+person2.saySmth2.apply(otherPerson2, ['Hello,']);
+
+// виклик функції function (word) через BIND
+const person3 = {
+  name: 'Ihor',
+  saySmth3: function (word) {
+    console.log(`${word} ${this.name}`);
+  },
+};
+
+const otherPerson3 = {
+  name: 'Dasha',
+};
+const newSaySmth = person3.saySmth3.bind(otherPerson3); //нова функція newSaySmth, яка є зв'язкою об'єкту person3 та функції otherPerson3. У newSaySmth всередині копія otherPerson3 і функція всередині цього об'єкту, яка вміє щось казати (saySmth3). Все це зв'язано в окремий блок у пам'яті і видається за нову функцію newSaySmth і ця функція намертво пов'язана з saySmth3
+newSaySmth('Hi');
+
+// Example bind
+function showContent() {
+  console.log(this.name);
 }
 
-user.date.id = 4;
-console.log(userCopy);
+const otherPerson4 = {
+  name: 'Alex',
+};
 
-// Lecture 7
-// RECURSION
-// Факторіал 5! = 1 * 2 * 3 * 4 * 5
-console.log(func(5));
-
-function func(number) {
-  if (number === 0) {
-    return 1;
-  } else {
-    return number * func(number - 1);
-  }
-}
-
-// ФУНКЦІЯ, ЩО ЗАМИКАЄТЬЧЯ IIFE (Immediately Invoked Function Expression)
-// option 1
-(function func1() {
-  console.log(1);
-})();
-
-// option 2
-let x = (function func2() {
-  return 2;
-})();
-console.log(x);
-
-// // ЗАМИКАННЯ
-function countManipulation() {
-  let count = 0; // Заводимо лічильник
-
-  // нам треба кожен раз, коли ми викликаємо функцію countIncrement збільшувати лічильник
-  function countIncrement() {
-    count++;
-    console.log(count);
-  }
-  return countIncrement;
-}
-
-let newFunc = countManipulation();
-newFunc();
-newFunc();
-newFunc();
-newFunc();
-
-// Math. ...
-// отримання рандомного числа
-console.log(Math.random()); // поверне рандомне число від 0 до 1
-console.log(Math.random() * 10); // поверне рандомне число від 0 до 10
-
-let num = 123.623672;
-console.log(Math.round(num)); //округляє число до більшого числа
-console.log(Math.floor(num)); // відсікає дрібну частину
-
-// toFixed округлює до вказаної кількості знаків після коми за правилами математики
-console.log(num.toFixed(4));
-
-// string
-// split, join
-let name = 'vdyicvgewjndcio';
-console.log(name[4]); // виводить конкретий елемент за індексом
-console.log(name.split('')); // розбиває рядок на масив рядків, шляхом поділу зазначеним підрядком('', ' ', або будь який інший знак)
-console.log(name.split('').join('')); // поєднує всі елементи масиву у рядок (спочатку поділили, а потім об'єєднали)
-console.log(name.split('').join(',')); // поєднує всі елементи масиву у рядок, але виведе кожен елемент через кому
-
-let str = 'vdyicvgewjndcio';
-
-let arr = str.split(''); // розбиває рядок на масив рядків, шляхом поділу зазначеним підрядком
-console.log(arr);
-
-let newString = arr.join(','); // поєднує всі елементи масиву у рядок, але виведе кожен елемент через кому
-console.log(newString);
-
-// replace, parseInt, parseFloat (привести рядок с зайвими знаками до чистого числа)
-let cost = '$156778,365';
-console.log(cost.replace('$', '')); // заміщує якись елементи в рядку на вказані, перший аргумент -  це, що замінити, другий - на що
-console.log(cost.replace(',', '.')); // заміна коми на крапку
-let costWhithoutSymbols = cost.replace('$', '').replace(',', '.'); // об'єднаний варіант
-console.log(parseInt(costWhithoutSymbols)); //приводе рядок у число, але тільки у ціле число відкидаючи дробову частину
-console.log(parseFloat(costWhithoutSymbols)); //приводе рядок у число, зберігає дробову частину
-
-// slice (повертає новий масив, який копіює елементи, починаючи з індексу start і до end (не включаючи end))
-let costWhithoutSymbols2 = cost.slice(1); // видалить перший знак(знак долара), тобто нульовий індекс, а с першого і далв все виведе
-console.log(costWhithoutSymbols2);
-
-let cost2 = '$156778,365';
-let costWhithoutSymbols3 = cost2.slice(2, 4); // виведе з другого індекса по четвертий
-console.log(costWhithoutSymbols3);
-
-let costWhithoutSymbols4 = cost2.slice(-4); // залишає елементи починаючі з кінця, інші видаляє
-console.log(costWhithoutSymbols4);
-
-// HW
-const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-
-function generateKey(length, characters) {
-  let key = '';
-  let index = Math.round(Math.random() * 10); // округлюємо та додаємо до key випадковий символ з надоного набору key (16 разів)
-  console.log(index); // номер індекса з characters
-  // додати цикл
-  key += characters[index]; // перебираємо доки не буде 16 index в key
-
-  return key;
-}
-
-const key = generateKey(16, characters);
-console.log(key); // eg599gb60q926j8i
+const newSaySmth2 = showContent.bind(otherPerson4);
+newSaySmth2();
