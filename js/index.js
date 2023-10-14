@@ -1,148 +1,192 @@
-// Lecture 8
+// Lecture 9
+// DOM
+console.log(document);
 
-// HIGHER-ORDER FUNCTION (функція вищого порядку) - приймає або повертає інші функції
-function func2() {
+// .getElementById() - Отримання елемента за id
+// достучатись до div та змінити колір
+document.getElementById('main-wrapper'); // достучались
+// побачити та вивести в консоль
+let element = document.getElementById('main-wrapper');
+console.log(element); // консоль виведе div з усім, що всередині
+
+element.style.backgroundColor = '#f8d6df'; // зміна кольору в div
+
+// .getElementsByClassName - отримати елементи за классом
+let elementsByClass = document.getElementsByClassName('main-wrapper'); // повертає асив елементів с заданим класом
+console.log(elementsByClass); // поверне масив з усіма елементами
+console.log(elementsByClass[0]); // поверне один елемент знайдений за класом та за вказаним індексом
+
+// querySelector()- вміє брати елементи з DOM-дерева по класу(.), по id(#), по тегу('div')по чому завгодно
+let elementByQuery = document.querySelector('#age-input'); //  видає перший елемент який знайшов по заданим параметрам
+let elementByQueryAll = document.querySelectorAll('#age-input'); // видасть масив всіх знайдених елементів
+
+// Створення нових елементів
+let newElement = document.createElement('div'); // створений, але поки ніде не знаходиться, тільки в JS
+newElement.textContent = 'Thia is a new element!'; // додаемо або змінюємо текст
+newElement.style.backgroundColor = '#32e3e2'; // задаємо стиль
+
+// .appendChild()
+document.body.appendChild(newElement); // додаємо елемент на сторінку відразу в body в кінець
+
+// Створення нових елементів 2
+let newElement2 = document.createElement('div'); // створений, але поки ніде не знаходиться, тільки в JS
+newElement2.textContent = 'This is a new element!'; // додаемо або змінюємо текст
+newElement2.style.backgroundColor = '#32e3e2'; // задаємо стиль
+
+let mainWrapper = document.querySelector('#main-wrapper');
+mainWrapper.appendChild(newElement2); // додаємо елемент на сторінку у node з id main-wrapper в кінець
+console.log(document.body);
+
+// видалення елементів
+document.body.removeChild(newElement);
+// mainWrapper.removeChild(newElement2);
+
+// подивитись елементи, які є всередині
+console.log(mainWrapper.children);
+
+// // видалити, щось з середини mainWrapper
+// mainWrapper.removeChild(mainWrapper.children[1]); // видалиться те, що під індексом 1
+
+// ПОДІЇ
+// onklick (html) - так не робити!!!
+function func() {
   console.log(1);
 }
 
-function func1(func2) {
-  func2();
+// Додавання події на кнопку
+let button = document.querySelector('#age-function'); // звертаємось до кнопки
+button.addEventListener('click', func); // додаємо подію (подія, функція)
+
+// Додавання події на кнопку 2
+let button2 = document.querySelector('#age-function2');
+
+function ageFunction() {
+  let input = document.querySelector('#age-input2'); // вибираємо input по id
+  // console.log(input.value); // перевірка, value це те, що зберігається в input як текст
+  let mainWrapper2 = document.querySelector('#main-wrapper'); // вибираємо головний div
+
+  // Видаляємо попередній текстовий елемент (якщо він існує)
+  let previousTextElement = document.querySelector('#main-wrapper span');
+
+  if (previousTextElement) {
+    mainWrapper2.removeChild(previousTextElement); // очистка перед новим введенням даних
+  }
+
+  let textElement = document.createElement('span'); // створюємо елемент
+  if (+input.value > 50) {
+    textElement.textContent = 'You are too old!';
+  } else {
+    textElement.textContent = 'You are too young!';
+  }
+
+  mainWrapper2.appendChild(textElement);
+}
+button2.addEventListener('click', ageFunction); // інформація виводиться як тільки щось набрати в input
+
+// CALCULATOR
+let firstNumber = '';
+let secondNumber = '';
+let whichNumber = 'one';
+let operation;
+
+let input3 = document.querySelector('#age-input3');
+let wrapper = document.querySelector('#main-wrapper2');
+
+function changeNumber() {
+  if (whichNumber === 'one') {
+    whichNumber = 'two';
+    changeInputValue('');
+  } else {
+    whichNumber = 'second';
+    changeInputValue('');
+  }
 }
 
-func1(func2); //викликаємо func1(), яка є функцією вищого порядку, а вона йде і диветься, що таке func2
-
-// CALL BACK FUNCTION - викликається всередині іншої по завершенню дій
-func2(); // - це функція call back
-
-// глобальний об'єкт WINDOW
-function myOwnFunction() {}
-console.log(window); //виведе всі об'єкти window + myOwnFunction (коли запускається программа в js відразу запускається об'єкт window)
-
-// CONTEXT Це абстрактний термін, що вказує на середовище виконання коду, яке містить змінні, об'єкти та інші дані, необхідні для виконання функції чи блоку коду (де функція була виконана, у який момент). Відомо, що в середовищі виконання коду також зберігається інформація про область видимості змінних, ланцюжок об'єктів, які викликають функції, і т. д.
-
-const obj = {
-  name: 'Ihor',
-  chowContext: function () {
-    console.log(this); // вказівник на context, там де буде викликана функція
-    // this поcилається на об'єкт, тому контекстом виконання функції буде об'єкт
-  },
-};
-obj.chowContext();
-
-// !!! Стрілкова функція не використовувати в цьому контексті
-const objArrow = {
-  name: 'Ihor',
-  chowContextArrow: () => {
-    // у стрілочної функції нема контексту
-    console.log(this); // у стрілочної функції нема context, її контекст - це об'єкт window
-  },
-};
-objArrow.chowContextArrow();
-
-var name = 'Tom'; // так як var, то створено у об'єкті window
-function tom() {
-  console.log(this.name + ' Runs'); // this посилається на window
-}
-// Invoke the function tom()
-tom(); // викликається в глобальній області видимості і виводиться
-
-// ARGUMENTS - псевдомасив, створюється автоматично, невидим, але можна вивести дані
-// псевдомасив, тому що у нього немає ніяких вбудованих функцій які є у масиві, може достучатись тільки до довжини, працює тільки з довжиною, через [i]
-function funcMult(a, b) {
-  console.log(arguments.length); // або console.log(arguments[0]);
-}
-funcMult(1, 3);
-
-// THIS посилається на поточний об'єкт
-const obj2 = {
-  name: 'Ihor',
-  showName: function () {
-    console.log(this.name);
-  },
-};
-obj2.showName(); // Ihor
-
-// Вбудовані методи
-// CALL -використовуєтьсядля виклику функції з вказаним контекстом і аргументами
-
-// EXAMPLE THIS whith CALL
-const obj3 = {
-  name: 'Ihor',
-  surname: 'fghdjks',
-}; // об'єкт у якого нічого нема
-
-const obj4 = {
-  name: 'Alex',
-};
-
-function showContext() {
-  console.log(this);
-} // функція,яка показує контекст там де вона була викликана
-// в данному виподку контекстом функції буде глобальний об'єкт і буде показивати, що зберігається в об'єкті obj3
-showContext.call(obj3); // {name: 'Ihor'} // функція покаже об'єкт, тепер this вказує не на глобальний об'єкт window, а на об'єкт на якому вона була викликана
-showContext.call(obj4); // {name: 'Alex'}
-
-// виклик функції function (word) через THIS
-const person = {
-  name: 'Ihor',
-  saySmth: function (word) {
-    console.log(`${word} ${this.name}`);
-  },
-};
-
-const otherPerson = {
-  name: 'Alex',
-};
-person.saySmth('Hello,');
-
-// виклик функції function (word) через CALL
-const person1 = {
-  name: 'Ihor',
-  saySmth1: function (word) {
-    console.log(`${word} ${this.name}`);
-  },
-};
-
-const otherPerson1 = {
-  name: 'Alex',
-};
-person1.saySmth1.call(otherPerson1, 'Hello,'); //перший аргумент - об'єкт на якому хочемо викликати функцію, наступні - параметри які приймає функція, яку було викликано
-
-// виклик функції function (word) через APPLY
-const person2 = {
-  name: 'Ihor',
-  saySmth2: function (word) {
-    console.log(`${word} ${this.name}`);
-  },
-};
-
-const otherPerson2 = {
-  name: 'Masha',
-};
-person2.saySmth2.apply(otherPerson2, ['Hello,']);
-
-// виклик функції function (word) через BIND
-const person3 = {
-  name: 'Ihor',
-  saySmth3: function (word) {
-    console.log(`${word} ${this.name}`);
-  },
-};
-
-const otherPerson3 = {
-  name: 'Dasha',
-};
-const newSaySmth = person3.saySmth3.bind(otherPerson3); //нова функція newSaySmth, яка є зв'язкою об'єкту person3 та функції otherPerson3. У newSaySmth всередині копія otherPerson3 і функція всередині цього об'єкту, яка вміє щось казати (saySmth3). Все це зв'язано в окремий блок у пам'яті і видається за нову функцію newSaySmth і ця функція намертво пов'язана з saySmth3
-newSaySmth('Hi');
-
-// Example bind
-function showContent() {
-  console.log(this.name);
+function changeInputValue(string) {
+  input3.value = string;
 }
 
-const otherPerson4 = {
-  name: 'Alex',
-};
+function showResult(resultText) {
+  let resultElement = document.createElement('span');
 
-const newSaySmth2 = showContent.bind(otherPerson4);
-newSaySmth2();
+  resultElement.textContent = resultText;
+
+  wrapper.appendChild(resultElement);
+}
+
+for (let i = 0; i < 10; i++) {
+  document.querySelector(`#btn-${i}`).addEventListener('click', () => {
+    // console.log(i); // при натисканні на цифри в консолі виводить відповідні цифри
+
+    if (whichNumber === 'one') {
+      firstNumber += i;
+      input3.value = firstNumber; // при натисканні цифри виводяться на табло калькулятора
+    } else {
+      secondNumber += i;
+      input3.value = secondNumber;
+    }
+  });
+}
+
+document.querySelector('#calculate').addEventListener('click', () => {
+  switch (operation) {
+    case 'multiply':
+      // console.log(firstNumber * secondNumber);
+      showResult(
+        `${firstNumber} * ${secondNumber} = ${(
+          firstNumber * secondNumber
+        ).toFixed(2)}`
+      );
+      changeInputValue('');
+      break;
+    case 'devide':
+      // console.log(firstNumber / secondNumber);
+      showResult(
+        `${firstNumber} / ${secondNumber} = ${(
+          firstNumber / secondNumber
+        ).toFixed(2)}`
+      );
+      changeInputValue('');
+      break;
+    case 'subtract':
+      // console.log(firstNumber - secondNumber);
+      showResult(
+        `${firstNumber} - ${secondNumber} = ${(
+          firstNumber - secondNumber
+        ).toFixed(2)}`
+      );
+      changeInputValue('');
+      break;
+    case 'add':
+      // console.log(+firstNumber + +secondNumber);
+      showResult(
+        `${firstNumber} + ${secondNumber} = ${(
+          +firstNumber + +secondNumber
+        ).toFixed(2)}`
+      );
+      changeInputValue('');
+      break;
+    default:
+      console.log('Nothing...');
+  }
+
+  // console.log(firstNumber);
+  // console.log(secondNumber);
+});
+
+document.querySelector('#multiply').addEventListener('click', () => {
+  operation = 'multiply';
+  changeNumber();
+});
+document.querySelector('#devide').addEventListener('click', () => {
+  operation = 'devide';
+  changeNumber();
+});
+document.querySelector('#subtract').addEventListener('click', () => {
+  operation = 'subtract';
+  changeNumber();
+});
+document.querySelector('#add').addEventListener('click', () => {
+  operation = 'add';
+  changeNumber();
+});

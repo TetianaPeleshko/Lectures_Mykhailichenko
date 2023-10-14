@@ -1,0 +1,45 @@
+body {
+  background-color: #e8f0d6;
+}
+
+.main {
+  display: flex;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #dad6f8;
+  width: 300px;
+  height: 600px;
+  padding: 15px;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px #b8bbab;
+}
+
+.btn {
+  width: fit-content;
+  /* Дозволяє блокувати ширину до ширини контенту */
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 2px;
+  /* Додайте маржу від верху, якщо потрібно */
+}
+
+.age-input, .age-input2 {
+  height: 35px;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 20px 20px 20px 0;
+}
+
+.age-function, .age-function2, .age-function3, .change-number {
+  width: 170px;
+  font-size: 16px;
+  margin: 20px 20px 20px 0;
+  padding: 10px;
+  background-color: #9aa7ee;
+  border-radius: 10px;
+}
