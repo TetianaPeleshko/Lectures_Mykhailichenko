@@ -9,45 +9,34 @@
 </head>
 
 <body>
-  <div class="main">
-    <div id="main-wrapper" class="main-wrapper" name="main">
-      <input id="age-input" class="age-input" type="text" name="">
-
-      <button id="age-function" class="age-function">Calculate answer</button>
-
-      <input id="age-input2" class="age-input2" type="text" name="">
-
-      <button id="age-function2" class="age-function2">Calculate answer2</button>
-    </div>
-    <!-- CALCULATOR -->
-    <div class="calculator">
-      <div id="main-wrapper2" class="main-wrapper">
-
-        <input id="age-input3" class="age-input" type="text">
-
-        <div id="numbers-wrapper" class="numbers-wrapper">
-          <button class="btn" id="btn-1">1</button>
-          <button class="btn" id="btn-2">2</button>
-          <button class="btn" id="btn-3">3</button>
-          <button class="btn" id="btn-4">4</button>
-          <button class="btn" id="btn-5">5</button>
-          <button class="btn" id="btn-6">6</button>
-          <button class="btn" id="btn-7">7</button>
-          <button class="btn" id="btn-8">8</button>
-          <button class="btn" id="btn-9">9</button>
-          <button class="btn" id="btn-0">0</button>
-        </div>
-
-        <div id="operation-wrapper" class="numbers-wrapper">
-          <button class="btn" id="multiply">*</button>
-          <button class="btn" id="devide">/</button>
-          <button class="btn" id="subtract">-</button>
-          <button class="btn" id="add">+</button>
-        </div>
-
-        <button id="calculate" class="age-function3">Calculate</button>
-      </div>
-    </div>
+  <div id="parent">
+    <button id="child" class="age-function">Click me!</button>
+    <input type="text" id="custom-input" placeholder="input">
+  </div>
+  <div id="parent1">
+    <button id="child1" class="age-function">Click me 1!</button>
+    <input type="text" id="custom-input1" placeholder="input 1">
+  </div>
+  <div id="parent2">
+    <button id="child2" class="age-function">Click me 2!</button>
+    <input type="text" id="custom-input2" placeholder="input 2">
+  </div>
+  <div id="parent3">
+    <button id="child3" class="age-function">Click me 3!</button>
+    <input type="text" id="custom-input3" placeholder="input 3">
+    <a id="myLink" href="http://google.com">Google</a>
+  </div>
+  <div id="parent4">
+    <button id="child4" class="age-function">Click me 4!</button>
+    <input type="text" id="custom-input4" placeholder="input 4">
+  </div>
+  <div id="parent5">
+    <button id="child5" class="age-function">setTimeout()</button>
+    <input type="text" id="custom-input5" placeholder="input 5">
+  </div>
+  <div id="parent6">
+    <button id="child6" class="age-function">setInterval()</button>
+    <input type="text" id="custom-input6" placeholder="input 6">
   </div>
 
   <script src="./js/index.js"></script>
