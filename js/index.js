@@ -1,71 +1,42 @@
-// Create smile data
-const emojis = [
-  {
-    smile: '😀',
-    voteCount: 0,
-  },
-  {
-    smile: '🦋',
-    voteCount: 0,
-  },
-  {
-    smile: '🥶',
-    voteCount: 0,
-  },
-  {
-    smile: '👣',
-    voteCount: 0,
-  },
-  {
-    smile: '🦄',
-    voteCount: 0,
-  },
-];
+// localStorage
+localStorage.setItem('userName', 'Ihor'); // в консолі набрати localStorage + Enter
+localStorage.setItem('userName1', 'Tetiana'); // в консолі набрати localStorage + Enter
 
-// Get smiles and vote containers
-let smileContainer = document.querySelector('#smile-container');
-let voteContainer = document.querySelector('#vote-container');
+// видалення з localStorage
+localStorage.removeItem('userName');
 
-// Update vote scores
-// для відмалювання кількості голосів заводимо окрему функцію
-function updateVotes() {
-  // перед кожним викликом showVotes у voteContainer треба достучатичь до HTML і обнулити всі дані
-  voteContainer.innerHTML = '';
+// отримати дані з localStorage по ключу
+console.log(localStorage.getItem('userName1'));
+console.log(localStorage.getItem('userName2')); // якщо таких даних нема то поверне null
 
-  emojis.forEach((item) => {
-    let voteElement = document.createElement('div');
-    // додаємо ще один клас з налаштуваннями в css
-    voteElement.classList.add('vote-score');
-
-    voteElement.textContent = item.voteCount;
-    // не потрібно рахувати натискання бо фони вже пораховані в функції нижче, потрібно тільки вивести це число д инамічно на сторінку
-    voteContainer.appendChild(voteElement);
-  });
+// перевірка чи є  дані по ключу
+if (localStorage.getItem('userName2')) {
+  console.log('Found');
+} else {
+  console.log('Not found');
 }
 
-// Show emojis elements
-function showEmojis() {
-  // проходимось по всім смайлам
-  emojis.forEach((item, index) => {
-    // кожен раз створюємо новий елемент в який покладемо один смайл
-    let emojyElement = document.createElement('div');
-    emojyElement.textContent = item.smile;
+// Додавання до об'єкту
+const obj = {
+  id: 1,
+  userName3: 'Ihor',
+};
 
-    // тепер треба на кожен смайл навісити подію, щоб при кожному натисканні спрацьовував count
-    emojyElement.addEventListener('click', () => {
-      // заходимо у emojis по індексу та беремо voteCount
-      emojis[index].voteCount++;
-      // console.log(emojis); // перевірка чи рахує при натисканні на сторінці
+localStorage.setItem('userData', JSON.stringify(obj)); // виведе дані у вигляжі строки
+// JSON.stringify() перетворить в строоку об'єкт, а потім ця строка будеть передана у localStorage
+console.log(localStorage.getItem('userData')); // виведе дані у вигляжі строки
+console.log(JSON.parse(localStorage.getItem('userData'))); // спочатку виведе дані у вигляжі строки, а потім перетворить у javascript об'єкт
 
-      // щоб вивести voteCount на сторінку замість console.log() кожен раз showVotes
-      updateVotes();
-    });
+// cookie
+const myCookie = document.cookie.split(';');
+console.log(myCookie);
 
-    // додаємо смайли в контейнер
-    smileContainer.appendChild(emojyElement);
-  });
+// знайти дані по ключу в cookie
+for (let cookie of myCookie) {
+  let data = cookie.split('=');
+  console.log(data);
+
+  if (data[0] == 'userName') {
+    console.log(data[1]);
+  }
 }
-
-// Initialization
-showEmojis(); // запускаємо функцію, щоб побачити смайли на сторінці
-updateVotes(); // виводимо кількість голосів на сторінку  на нулях
