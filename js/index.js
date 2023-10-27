@@ -1,139 +1,100 @@
-// Lecture 14 regular Expression
+// Lecture 15 Asynchronous Code Execution,Working With Data Structures
 
-// TotalPrice
-let priceArr = [
-  {
-    name: 'BMW',
-    price: '$234234',
-  },
-  {
-    name: 'BMW',
-    price: '$234234',
-  },
-  {
-    name: 'Toyota',
-    price: '$234234',
-  },
-];
+// EventLoop
 
-let total = 0;
+//
+//
+// Map - пара: ключ-значення, де клю унікальний. Ключем можно зробити рядок. число, об'єкт і т.д.
+let myMap = new Map(); // створення Map
 
-priceArr.forEach((item) => {
-  total += +item.price.replace('$', ''); // рахуємо сумму всіх price
-});
+// запис даних в Map за допомогою функції set()
+myMap.set('key1', 'Ihor');
+myMap.set('key2', 'Alex');
+myMap.set('key3', 'Al');
 
-console.log(total);
+// дістаємо значення - викликати функцію get за ключем
+console.log(myMap.get('key2'));
 
-// indexOf та includes пошук підстроки в строці
-// є вбудована функція у всі строки indexOf
-let str = 'Hello world!';
+// видалення ключа
+myMap.delete('key1');
+console.log(myMap.get('key1')); // undefined
 
-console.log(str.indexOf('world')); // повертає номер індексу першого символу повного співпадіння
-console.log(str.includes('world')); // повертає true або false
+// функція keys() і values()
+console.log(myMap.keys()); // виводить всі ключи
+console.log(myMap.values()); // виводить всі значення
 
-// Regular Expression -  RegExp
-let str1 = 'Hello world ljfg adifu  dsjfk world';
-
-let regexp = /world/;
-
-// .TEST()
-console.log(regexp.test(str1)); // виведе true або false
-
-// .MATCH
-console.log(str1.match(regexp)); // виведе масив з першим знайденим значенням
-
-// g - global, якщо треба знайти всі співпадіння
-let regexp1 = /world/g;
-console.log(str1.match(regexp1));
-
-// Метасимволи
-// . (КРАПКА)
-let text = 'abc, adc, a:c, 234567, 87, -34';
-let regex = /a.c/g;
-
-console.log(text.match(regex)); // виведе всі співпадіння, які починаються на a і закінчуються на c (g дасть змогу вивести всі співпадіння)
-
-// вивести всі цифри
-let regex1 = /\d/g;
-console.log(text.match(regex1)); // виведе всі знайдені цифри масивом окремих цифр
-
-// буква, цифра або символ
-let regex2 = /\w/g;
-console.log(text.match(regex2));
-
-// для спецсімволів (шукає пробіл, табуляцію, перенос рядка і т.д.)
-let regex3 = /\s/g;
-console.log(text.match(regex3));
-
-// купки
-let text2 = 'jksjksjks jksdfgojksiaorgfhbg jhhfgj jksert dfsg jksert';
-let reg = /(jks)+/g;
-
-console.log(text2.match(reg)); // дістане всі послідовності jks
-
-// Квантифікатори
-let text3 = 'jksjksjjks jksdfgojksiaorgfhbg jjhhfgj jksert dfsg jksert';
-let regex4 = /j*/g;
-
-console.log(text3.match(regex4));
-
-let regex5 = /j{2}/g;
-
-console.log(text3.match(regex5));
-
-// EXAMPLE 1
-
-// перевірка телефона на валідацію
-let phone = '+380686054796';
-
-let regexp2 = /^\+380/; // 1. Номер повинен починатись на +380
-console.log(regexp2.test(phone)); // true
-
-let regexp3 = /^\+380\d{9}/; // 2. Номер повинен містити тільки 12 цифр (три вже вказали, залишилось ще 9)
-console.log(regexp3.test(phone)); // true
-
-let phone2 = '+3803467605';
-console.log(regexp3.test(phone2)); // false, цифр менше ніж треба, але якщо іх більше, то буде true,тому що він знайде 12 необхідних і буде рахувати, що умова виконалась, те що цифр більше буде не важливим
-
-let phone3 = '+3803465878588587605';
-let regexp4 = /^\+380\d{9}$/; // $ означає де повинен закінчитись рядок
-console.log(regexp4.test(phone3)); // false, якщо цифр більше ніж потрібно
-
-// EXAMPLE 2
-
-// Регулярний вираз для перевірки номера телефону
-var phonePattern = /^\d{10}$/;
-
-// Перевірка номера телефону
-var phoneNumber = '1234567890'; // Ваш номер телефону для перевірки
-if (phonePattern.test(phoneNumber)) {
-  console.log('Номер телефону є валідним.');
-} else {
-  console.log('Номер телефону не є валідним.');
+// ітерування по Map
+for (let item of myMap) {
+  console.log(item); //виводе пару ключ-значення у вигляді масиву
 }
+// ітерування по Map ключам
+for (let item of myMap.keys()) {
+  console.log(item);
+}
+// ітерування по Map значенням
+for (let item of myMap.values()) {
+  console.log(item);
+}
+// перевірка наявності значення
+console.log(myMap.has('keys3'));
 
-// EXAMPLE 3
+//
+//
+//
+// Set - колекція унікальних значень (значень може бути багато, але збережені будуть тільки унікальні)
+let mySet = new Set();
+mySet.add(1);
+mySet.add(1);
+mySet.add(1);
+mySet.add(1);
+mySet.add(1);
+mySet.add(2);
+mySet.add(3);
+console.log(mySet); // Set {1, 2}
 
-// повинен починатись с букви
-// повинин містити @ і далі повинен іни gmail.com
+// видалення ключа
+mySet.delete(2);
+console.log(mySet);
 
-let mail = 'ihor@gmail.com';
-let regExMail = /^[a-zA-Z][A-Za-z0-9]*@gmail\.com/;
+console.log(mySet.has(4)); // false
 
-// [a-zA-Z] - означає, що початок рядка (перший символ) може бути лише буквою як у верхньому так і у нижньому регистрі
-// [A-Za-z0-9] далі можутьідти цифри та букви
-// * означає, що таких букв і цифр може бути багато
+//
+//
+//
+//  Задача зі співбечіди: вивести унікальні значення
 
-console.log(regExMail.test(mail));
+let arr = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1];
 
-// EXAMPLE 4
+// Map
+let newMap = new Map();
 
-var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+for (let i = 0; i < arr.length; i++) {
+  newMap.set(arr[i], arr[i]);
+}
+console.log(newMap);
 
-// '^' - початок рядка.
-// '[a-zA-Z0-9._%+-]+ '- цей шматок виразу відповідає локальній частині адреси електронної пошти перед символом "@". Він дозволяє букви в нижньому і верхньому регістрах, цифри та деякі дозволені спеціальні символи, такі як ".", "_", "%", "+", та "-". Квантифікатор + вказує, що ця частина може містити один або більше символів.
-// '@' - символ "@" є обов'язковою частиною адреси електронної пошти.
-// '[a-zA-Z0-9.-]+' - цей шматок виразу відповідає доменній частині адреси електронної пошти після символа "@". Він дозволяє букви в нижньому і верхньому регістрах, цифри, крапки та дефіси. Квантифікатор + вказує, що ця частина може містити один або більше символів.
-// '\.' - це просто символ крапки між доменною частиною і розширенням.
-// '[a-zA-Z]{2,}' - ця частина виразу відповідає розширенню (наприклад, "com", "org"). Вона дозволяє букви в верхньому і нижньому регістрах та вимагає, щоб розширення мало щонайменше два символи.
-// '$' - кінець рядка.
+// Set
+let newSet = new Set();
+
+for (let i = 0; i < arr.length; i++) {
+  newSet.add(arr[i]);
+}
+console.log(newSet);
+
+// object 1
+let obj = {};
+
+for (let i = 0; i < arr.length; i++) {
+  obj[arr[i]] = arr[i];
+}
+console.log(obj);
+
+// object 2
+let obj1 = {};
+
+for (let i = 0; i < arr.length; i++) {
+  if (!obj1[arr[i]]) {
+    obj1[arr[i]] = arr[i];
+  }
+}
+console.log(obj1);
